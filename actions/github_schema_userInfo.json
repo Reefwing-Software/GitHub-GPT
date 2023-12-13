@@ -1,0 +1,453 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "GitHub User API",
+    "version": "1.0.0",
+    "description": "API for retrieving GitHub user information."
+  },
+  "servers": [
+    {
+      "url": "https://api.github.com"
+    }
+  ],
+  "paths": {
+    "/users/{username}": {
+      "get": {
+        "summary": "Get user information",
+        "description": "Retrieves information for a specified GitHub user.",
+        "operationId": "getUserInfo",
+        "parameters": [
+          {
+            "name": "username",
+            "in": "path",
+            "required": true,
+            "description": "GitHub username to retrieve information for.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "$ref": "#/components/schemas/PrivateUser"
+                    },
+                    {
+                      "$ref": "#/components/schemas/PublicUser"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "User not found"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "PrivateUser": {
+        "title": "Private User",
+        "description": "Private User",
+        "type": "object",
+        "properties": {
+          "login": {
+            "type": "string"
+          },
+          "id": {
+            "type": "integer"
+          },
+          "node_id": {
+            "type": "string"
+          },
+          "avatar_url": {
+            "type": "string",
+            "format": "uri"
+          },
+          "gravatar_id": {
+            "type": "string"
+          },
+          "url": {
+            "type": "string",
+            "format": "uri"
+          },
+          "html_url": {
+            "type": "string",
+            "format": "uri"
+          },
+          "followers_url": {
+            "type": "string",
+            "format": "uri"
+          },
+          "following_url": {
+            "type": "string"
+          },
+          "gists_url": {
+            "type": "string"
+          },
+          "starred_url": {
+            "type": "string"
+          },
+          "subscriptions_url": {
+            "type": "string",
+            "format": "uri"
+          },
+          "organizations_url": {
+            "type": "string",
+            "format": "uri"
+          },
+          "repos_url": {
+            "type": "string",
+            "format": "uri"
+          },
+          "events_url": {
+            "type": "string"
+          },
+          "received_events_url": {
+            "type": "string",
+            "format": "uri"
+          },
+          "type": {
+            "type": "string"
+          },
+          "site_admin": {
+            "type": "boolean"
+          },
+          "name": {
+            "type": "string"
+          },
+          "company": {
+            "type": "string"
+          },
+          "blog": {
+            "type": "string"
+          },
+          "location": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string",
+            "format": "email"
+          },
+          "hireable": {
+            "type": "boolean"
+          },
+          "bio": {
+            "type": "string"
+          },
+          "twitter_username": {
+            "type": "string"
+          },
+          "public_repos": {
+            "type": "integer"
+          },
+          "public_gists": {
+            "type": "integer"
+          },
+          "followers": {
+            "type": "integer"
+          },
+          "following": {
+            "type": "integer"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updated_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "private_gists": {
+            "type": "integer"
+          },
+          "total_private_repos": {
+            "type": "integer"
+          },
+          "owned_private_repos": {
+            "type": "integer"
+          },
+          "disk_usage": {
+            "type": "integer"
+          },
+          "collaborators": {
+            "type": "integer"
+          },
+          "two_factor_authentication": {
+            "type": "boolean"
+          },
+          "plan": {
+            "type": "object",
+            "properties": {
+              "collaborators": {
+                "type": "integer"
+              },
+              "name": {
+                "type": "string"
+              },
+              "space": {
+                "type": "integer"
+              },
+              "private_repos": {
+                "type": "integer"
+              }
+            },
+            "required": [
+              "collaborators",
+              "name",
+              "space",
+              "private_repos"
+            ]
+          },
+          "suspended_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "business_plus": {
+            "type": "boolean"
+          },
+          "ldap_dn": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "avatar_url",
+          "events_url",
+          "followers_url",
+          "following_url",
+          "gists_url",
+          "gravatar_id",
+          "html_url",
+          "id",
+          "node_id",
+          "login",
+          "organizations_url",
+          "received_events_url",
+          "repos_url",
+          "site_admin",
+          "starred_url",
+          "subscriptions_url",
+          "type",
+          "url",
+          "bio",
+          "blog",
+          "company",
+          "email",
+          "followers",
+          "following",
+          "hireable",
+          "location",
+          "name",
+          "public_gists",
+          "public_repos",
+          "created_at",
+          "updated_at",
+          "collaborators",
+          "disk_usage",
+          "owned_private_repos",
+          "private_gists",
+          "total_private_repos",
+          "two_factor_authentication"
+        ]
+      },
+      "PublicUser": {
+        "title": "Public User",
+        "description": "Public User",
+        "type": "object",
+        "properties": {
+          "login": {
+            "type": "string"
+          },
+          "id": {
+            "type": "integer"
+          },
+          "node_id": {
+            "type": "string"
+          },
+          "avatar_url": {
+            "type": "string",
+            "format": "uri"
+          },
+          "gravatar_id": {
+            "type": "string"
+          },
+          "url": {
+            "type": "string",
+            "format": "uri"
+          },
+          "html_url": {
+            "type": "string",
+            "format": "uri"
+          },
+          "followers_url": {
+            "type": "string",
+            "format": "uri"
+          },
+          "following_url": {
+            "type": "string"
+          },
+          "gists_url": {
+            "type": "string"
+          },
+          "starred_url": {
+            "type": "string"
+          },
+          "subscriptions_url": {
+            "type": "string",
+            "format": "uri"
+          },
+          "organizations_url": {
+            "type": "string",
+            "format": "uri"
+          },
+          "repos_url": {
+            "type": "string",
+            "format": "uri"
+          },
+          "events_url": {
+            "type": "string"
+          },
+          "received_events_url": {
+            "type": "string",
+            "format": "uri"
+          },
+          "type": {
+            "type": "string"
+          },
+          "site_admin": {
+            "type": "boolean"
+          },
+          "name": {
+            "type": "string"
+          },
+          "company": {
+            "type": "string"
+          },
+          "blog": {
+            "type": "string"
+          },
+          "location": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string",
+            "format": "email"
+          },
+          "hireable": {
+            "type": "boolean"
+          },
+          "bio": {
+            "type": "string"
+          },
+          "twitter_username": {
+            "type": "string"
+          },
+          "public_repos": {
+            "type": "integer"
+          },
+          "public_gists": {
+            "type": "integer"
+          },
+          "followers": {
+            "type": "integer"
+          },
+          "following": {
+            "type": "integer"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updated_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "plan": {
+            "type": "object",
+            "properties": {
+              "collaborators": {
+                "type": "integer"
+              },
+              "name": {
+                "type": "string"
+              },
+              "space": {
+                "type": "integer"
+              },
+              "private_repos": {
+                "type": "integer"
+              }
+            },
+            "required": [
+              "collaborators",
+              "name",
+              "space",
+              "private_repos"
+            ]
+          },
+          "suspended_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "private_gists": {
+            "type": "integer"
+          },
+          "total_private_repos": {
+            "type": "integer"
+          },
+          "owned_private_repos": {
+            "type": "integer"
+          },
+          "disk_usage": {
+            "type": "integer"
+          },
+          "collaborators": {
+            "type": "integer"
+          }
+        },
+        "required": [
+          "avatar_url",
+          "events_url",
+          "followers_url",
+          "following_url",
+          "gists_url",
+          "gravatar_id",
+          "html_url",
+          "id",
+          "node_id",
+          "login",
+          "organizations_url",
+          "received_events_url",
+          "repos_url",
+          "site_admin",
+          "starred_url",
+          "subscriptions_url",
+          "type",
+          "url",
+          "bio",
+          "blog",
+          "company",
+          "email",
+          "followers",
+          "following",
+          "hireable",
+          "location",
+          "name",
+          "public_gists",
+          "public_repos",
+          "created_at",
+          "updated_at"
+        ],
+        "additionalProperties": false
+      }
+    }
+  }
+}

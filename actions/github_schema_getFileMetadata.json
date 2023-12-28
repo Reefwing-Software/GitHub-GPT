@@ -1,0 +1,144 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+      "title": "GitHub Repository File Metadata API",
+      "version": "1.0.0"
+    },
+    "servers": [
+      {
+        "url": "https://api.github.com"
+      }
+    ],
+    "paths": {
+      "/repos/{owner}/{repo}/contents/{path}": {
+        "get": {
+          "operationId": "getFileMetadata",
+          "summary": "Get File Metadata",
+          "description": "Retrieves metadata for a file in a GitHub repository.",
+          "parameters": [
+            {
+              "name": "owner",
+              "in": "path",
+              "required": true,
+              "description": "Owner of the repository",
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+              "name": "repo",
+              "in": "path",
+              "required": true,
+              "description": "Repository name",
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+              "name": "path",
+              "in": "path",
+              "required": true,
+              "description": "Path to the file within the repository",
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Successful response",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/FileMetadata"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "File not found"
+            }
+          }
+        }
+      }
+    },
+    "components": {
+      "schemas": {
+        "FileMetadata": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "description": "Name of the file"
+            },
+            "path": {
+              "type": "string",
+              "description": "Path of the file in the repository"
+            },
+            "sha": {
+              "type": "string",
+              "description": "SHA hash of the file"
+            },
+            "size": {
+              "type": "integer",
+              "description": "Size of the file in bytes"
+            },
+            "url": {
+              "type": "string",
+              "format": "uri",
+              "description": "API URL to access the file"
+            },
+            "html_url": {
+              "type": "string",
+              "format": "uri",
+              "description": "Web URL to view the file"
+            },
+            "git_url": {
+              "type": "string",
+              "format": "uri",
+              "description": "Git URL to access the file"
+            },
+            "download_url": {
+              "type": "string",
+              "format": "uri",
+              "description": "Direct URL to download the file"
+            },
+            "type": {
+              "type": "string",
+              "description": "Type of the item (e.g., file, dir)"
+            },
+            "content": {
+              "type": "string",
+              "description": "Content of the file in base64 encoding"
+            },
+            "encoding": {
+              "type": "string",
+              "description": "Encoding of the content (e.g., base64)"
+            },
+            "_links": {
+              "type": "object",
+              "properties": {
+                "self": {
+                  "type": "string",
+                  "format": "uri",
+                  "description": "API URL for the file"
+                },
+                "git": {
+                  "type": "string",
+                  "format": "uri",
+                  "description": "Git URL for the file"
+                },
+                "html": {
+                  "type": "string",
+                  "format": "uri",
+                  "description": "Web URL for the file"
+                }
+              },
+              "description": "Related links"
+            }
+          }
+        }
+      }
+    }
+  }
+  

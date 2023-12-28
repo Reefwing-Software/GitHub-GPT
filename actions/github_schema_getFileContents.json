@@ -1,0 +1,77 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+      "title": "GitHub Raw Content API",
+      "version": "1.0.0",
+      "description": "API for accessing raw content of files in GitHub repositories."
+    },
+    "servers": [
+      {
+        "url": "https://raw.githubusercontent.com"
+      }
+    ],
+    "paths": {
+      "/{owner}/{repo}/{branch}/{path}": {
+        "get": {
+          "operationId": "getFileContents",
+          "summary": "Get Raw File Content",
+          "description": "Retrieve the raw content of a file from a specified GitHub repository.",
+          "parameters": [
+            {
+              "name": "owner",
+              "in": "path",
+              "required": true,
+              "description": "Username of the repository's owner on GitHub.",
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+              "name": "repo",
+              "in": "path",
+              "required": true,
+              "description": "Name of the repository.",
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+              "name": "branch",
+              "in": "path",
+              "required": true,
+              "description": "Name of the repository branch. Defaults to 'main' if not provided.",
+              "schema": {
+                "type": "string",
+                "default": "main"
+              }
+            },
+            {
+              "name": "path",
+              "in": "path",
+              "required": true,
+              "description": "Complete path to the file within the repository, including file name and extension.",
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Successful response with raw file content.",
+              "content": {
+                "text/plain": {
+                  "schema": {
+                    "type": "string"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "File not found."
+            }
+          }
+        }
+      }
+    }
+  }
+  

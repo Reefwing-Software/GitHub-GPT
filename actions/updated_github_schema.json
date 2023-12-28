@@ -1,0 +1,115 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "GitHub User API",
+        "version": "1.0.1",
+        "description": "API for retrieving GitHub user & repo information."
+    },
+    "servers": [
+        {
+            "url": "https://api.github.com"
+        }
+    ],
+    "paths": {
+        "/users/{username}": {
+            "get": {
+                "summary": "Get user information",
+                "description": "Retrieves information for a specified GitHub user.",
+                "operationId": "getUserInfo",
+                "parameters": [
+                    {
+                        "name": "username",
+                        "in": "path",
+                        "required": true,
+                        "description": "GitHub username to retrieve information for.",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "oneOf": [
+                                        {
+                                            "$ref": "#/components/schemas/PrivateUser"
+                                        },
+                                        {
+                                            "$ref": "#/components/schemas/PublicUser"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "User not found"
+                    }
+                }
+            }
+        },
+        "/orgs/{username}/repos": {
+            "get": {
+                "summary": "Get repository list for an organization",
+                "description": "Retrieves a list of repositories for a specified GitHub organization.",
+                "operationId": "getRepoListOrg",
+                "parameters": [
+                    {
+                        "name": "username",
+                        "in": "path",
+                        "required": true,
+                        "description": "GitHub organization name.",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "per_page",
+                        "in": "query",
+                        "required": false,
+                        "description": "Number of records per page.",
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "required": false,
+                        "description": "Current page number.",
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Organization not found"
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "PrivateUser": {},
+            "PublicUser": {}
+        }
+    }
+}

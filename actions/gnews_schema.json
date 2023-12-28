@@ -1,0 +1,116 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+      "title": "GNews API",
+      "version": "v4",
+      "description": "Provides access to current and historic news."
+    },
+    "servers": [
+      {
+        "url": "https://gnews.io/api/v4"
+      }
+    ],
+    "paths": {
+      "/search": {
+        "get": {
+          "operationId": "getNews",
+          "summary": "Search for news articles",
+          "parameters": [
+            {
+              "name": "q",
+              "in": "query",
+              "required": true,
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+              "name": "country",
+              "in": "query",
+              "required": false,
+              "description": "The 2-letter country code of the country where the news articles were published.",
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+              "in": "query",
+              "name": "apikey",
+              "schema": {
+                "type": "string"
+              },
+              "required": true,
+              "description": "The API key for accessing gnews.io."
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "totalArticles": {
+                        "type": "integer"
+                      },
+                      "articles": {
+                        "type": "array",
+                        "items": {
+                          "$ref": "#/components/schemas/Article"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "400": { "description": "Bad Request" },
+            "401": { "description": "Unauthorized" },
+            "403": { "description": "Forbidden" },
+            "429": { "description": "Too Many Requests" },
+            "500": { "description": "Internal Server Error" },
+            "503": { "description": "Service Unavailable" }
+          }
+        }
+      }
+    },
+    "components": {
+      "schemas": {
+        "Article": {
+          "type": "object",
+          "properties": {
+            "title": { "type": "string" },
+            "description": { "type": "string" },
+            "content": { "type": "string" },
+            "url": { "type": "string", "format": "uri" },
+            "image": { "type": "string", "format": "uri" },
+            "publishedAt": { "type": "string", "format": "date-time" },
+            "source": {
+              "$ref": "#/components/schemas/Source"
+            }
+          }
+        },
+        "Source": {
+          "type": "object",
+          "properties": {
+            "name": { "type": "string" },
+            "url": { "type": "string", "format": "uri" }
+          }
+        }
+      },
+      "securitySchemes": {
+        "ApiKeyAuth": {
+          "type": "apiKey",
+          "in": "query",
+          "name": "apikey"
+        }
+      }
+    },
+    "security": [
+      {
+        "ApiKeyAuth": []
+      }
+    ]
+}
+  
